@@ -2,8 +2,9 @@ from pyexpat.errors import messages
 
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import insert
+from sqlalchemy import insert, text, create_engine
 from data_models import db, Author, Book
+import helper
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/malgorzata/PycharmProjects/BookAlchemy/data/library.sqlite'
@@ -22,6 +23,24 @@ def add_author():
         return render_template('add_author.html', message="Author added.")
 
     return render_template('add_author.html')
+
+
+@app.route('/add_book', methods=['GET', 'POST'])
+def add_book():
+    if request.method == 'POST':
+        action = request.form.get('add')
+        if action == 'Add Book':
+            new_book = Book(isbn=request.form.get('ISBN'),
+                            title=request.form.get('title'),
+                            publication_year=request.form.get('publication_year'),
+                            author_id=request.form.get('author'))
+            db.session.add(new_book)
+            db.session.commit()
+            authors = helper.get_all_authors()
+            return render_template('add_book.html', message="Book added.", authors=authors)
+    else:
+        authors = helper.get_all_authors()
+    return render_template('add_book.html', authors=authors)
 
 
 if __name__=="__main__":
