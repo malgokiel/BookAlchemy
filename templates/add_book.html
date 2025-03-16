@@ -7,9 +7,29 @@
   </head>
   <body>
 
-  <form action="/add_author" method="POST">
-  <!-- Add the form here -->
+  <form action="/add_book" method="POST">
+  <label for="title">Book title:</label>
+  <input type="text" id="title" name="title" required><br><br>
+  <label for="author">Author:</label>
+  <select id="author" name="author" required></select><br><br>
+  <label for="ISBN">ISBN:</label>
+  <input type="text" id="ISBN" name="ISBN" required><br><br>
+  <label for="publication_year">Publication year:</label>
+  <input type="number" min=0 id="publication_year" name="publication_year"><br><br>
+  <input type="submit" value="Add Book" name="add">
   </form>
-
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
   </body>
+  <script>
+      function setYear() {
+      let year = new Date().getFullYear();
+      let publicationYear = document.getElementById('publication_year');
+      publicationYear.setAttribute('max', year);
+      publicationYear.setAttribute('value', year);
+      };
+      document.addEventListener('DOMContentLoaded', setYear);
+  </script>
+
 </html>
