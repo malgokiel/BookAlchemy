@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/static/styles.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
   <nav class="topnav">
@@ -16,16 +17,20 @@
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-        <form action="sort" method="post">
-            <a><button value="author" class="sort-opt">by author</button></a>
-
-          <a><button value="title" class="sort-opt">by title</button></a>
-          <a><button value="year" class="sort-opt">by year</button></a>
-                </select>
+        <form action="home" method="post">
+            <button name="sort" value="author" class="sort-opt">by author</button>
+            <button name="sort" value="title" class="sort-opt">by title</button>
+          <button name="sort" value="year" class="sort-opt">by year</button>
             </form>
     </div>
-  </div>
 
+  </div>
+<div class="search-container">
+          <form action="home" method="post">
+      <input type="text" name="search" placeholder="Search..">
+      <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+      </div>
  </nav>
   <div class="books-container">
   {% for book in books %}
@@ -35,11 +40,13 @@
         </div>
         <div class="slide" id="book-card">
             <h1>{{ book.title }}</h1>
-            <form action="/delete" method="post" class="form-button-format">
+            <form action="home"  method="post" class="form-button-format">
                 <p class="form-button-format">{{ book.name }}</p>
                 <p class="form-button-format">{{ book.publication_year }}</p>
+                <button name="delete" value="{{ book.id }}" type="submit" class="form-button-format">delete book</button>
             </form>
-            <button type="button" class="form-button-format">delete book</button>
+
+
         </div>
     </div>
   {% endfor %}
