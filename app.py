@@ -12,6 +12,8 @@ QUERY_SORTED_AUTHORS = "SELECT books.*, authors.name FROM books JOIN authors ON 
 QUERY_SORTED_TITLES = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY books.title"
 QUERY_SORTED_YEARS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY books.publication_year DESC"
 QUERY_BY_SEARCH_TERM = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id = authors.id WHERE books.title LIKE CONCAT('%', :search_for, '%') OR authors.name LIKE CONCAT('%', :search_for, '%')"
+QUERY_ALL_AUTHORS_INFO = "SELECT authors.*, COUNT(books.author_id) AS book_count FROM authors LEFT JOIN books ON authors.id = books.author_id GROUP BY authors.name"
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/malgorzata/PycharmProjects/BookAlchemy/data/library.sqlite'
 db.init_app(app)
@@ -51,9 +53,12 @@ def add_book():
         authors = helper.get_all_results(QUERY_ALL_AUTHORS)
     return render_template('add_book.html', authors=authors)
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
+@app.route('/books', methods=['GET', 'POST'], endpoint='books')
+def all_books():
     books = helper.get_all_results(QUERY_ALL_BOOKS)
     if request.method == 'POST':
         action = request.form.get('sort')
@@ -75,10 +80,24 @@ def home():
         elif search:
             books = helper.get_all_results(QUERY_BY_SEARCH_TERM,{'search_for':search})
 
-        return render_template('home.html', books=books)
-        # return redirect('/')
+        return render_template('books.html', books=books)
 
-    return render_template('home.html', books=books)
+    return render_template('books.html', books=books)
+
+@app.route('/authors', methods=['GET', 'POST'])
+def all_authors():
+    authors = helper.get_all_results(QUERY_ALL_AUTHORS_INFO)
+    if request.method == 'POST':
+        delete = request.form.get('delete')
+        author_id = delete
+        author_to_delete = db.session.get(Author, author_id)
+        db.session.delete(author_to_delete)
+        db.session.commit()
+        authors = helper.get_all_results(QUERY_ALL_AUTHORS_INFO)
+
+        return render_template('authors.html', authors=authors, message="Author deleted")
+
+    return render_template('authors.html', authors=authors)
 
 # with app.app_context():
 #   db.create_all()
