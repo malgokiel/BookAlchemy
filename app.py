@@ -11,7 +11,7 @@ QUERY_ALL_BOOKS = "SELECT books.*, authors.name FROM books JOIN authors ON books
 QUERY_SORTED_AUTHORS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY authors.name"
 QUERY_SORTED_TITLES = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY books.title"
 QUERY_SORTED_YEARS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY books.publication_year DESC"
-
+QUERY_BY_SEARCH_TERM = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id = authors.id WHERE books.title LIKE CONCAT('%', :search_for, '%') OR authors.name LIKE CONCAT('%', :search_for, '%')"
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/malgorzata/PycharmProjects/BookAlchemy/data/library.sqlite'
 db.init_app(app)
@@ -58,6 +58,7 @@ def home():
     if request.method == 'POST':
         action = request.form.get('sort')
         delete = request.form.get('delete')
+        search = request.form.get('search')
         if action:
             if action == 'author':
                 books = helper.get_all_results(QUERY_SORTED_AUTHORS)
@@ -71,6 +72,8 @@ def home():
             db.session.delete(book_to_delete)
             db.session.commit()
             books = helper.get_all_results(QUERY_ALL_BOOKS)
+        elif search:
+            books = helper.get_all_results(QUERY_BY_SEARCH_TERM,{'search_for':search})
 
         return render_template('home.html', books=books)
 
