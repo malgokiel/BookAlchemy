@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+<link href="/static/styles.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+  <nav class="topnav">
+      <a href="/">Home</a>
+  <a href="/add_book">Add Book</a>
+      <a href="/add_author">Add Author</a>
+  <div class="dropdown">
+    <button class="dropbtn">Sort
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+        <form action="/" method="post">
+            <button name="sort" value="author" class="sort-opt">by author</button>
+            <button name="sort" value="title" class="sort-opt">by title</button>
+          <button name="sort" value="year" class="sort-opt">by year</button>
+            </form>
+    </div>
+
+  </div>
+<div class="search-container">
+          <form action="/" method="post">
+      <input type="text" name="search" placeholder="Search..">
+      <button name="search" type="submit"><i class="fa fa-search"></i></button>
+              </form>
+      </div>
+ </nav>
+<main>
+    {% block main %}{% endblock %}
+</main>
+</body>
+</html>

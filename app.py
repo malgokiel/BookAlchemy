@@ -52,7 +52,7 @@ def add_book():
     return render_template('add_book.html', authors=authors)
 
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     books = helper.get_all_results(QUERY_ALL_BOOKS)
     if request.method == 'POST':
@@ -76,11 +76,12 @@ def home():
             books = helper.get_all_results(QUERY_BY_SEARCH_TERM,{'search_for':search})
 
         return render_template('home.html', books=books)
+        # return redirect('/')
 
     return render_template('home.html', books=books)
 
-with app.app_context():
-  db.create_all()
+# with app.app_context():
+#   db.create_all()
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
