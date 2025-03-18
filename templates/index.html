@@ -2,6 +2,36 @@
 
 {% block main %}
 <h2>Recently Added</h2>
-
+<div class="books-container">
+  {% for book in books %}
+  <div class="container">
+        <div class="slide" id="cover-card">
+            <img src="https://covers.openlibrary.org/b/ISBN/{{ book.isbn }}-M.jpg" alt="cover of {{ book.title }}" class="book-cover">
+        </div>
+        <div class="slide" id="book-card">
+            <h1>{{ book.title }}</h1>
+            <form action="books"  method="post" class="form-button-format">
+                <p class="form-button-format">{{ book.name }}</p>
+                <p class="form-button-format">{{ book.publication_year }}</p>
+            </form>
+        </div>
+    </div>
+  {% endfor %}
+      </div>
 <h2>Next read maybe?</h2>
+<div class="books-container">
+  <div class="container">
+        <div class="slide" id="cover-card">
+            <img src="https://covers.openlibrary.org/b/ISBN/{{ recommended_book.isbn }}-M.jpg" alt="cover of {{ recommended_book.title }}" class="book-cover">
+        </div>
+        <div class="slide" id="book-card">
+            <h1>{{ recommended_book.title }}</h1>
+            <form action="books"  method="post" class="form-button-format">
+                <p class="form-button-format">{{ recommended_book.name }}</p>
+                <p class="form-button-format">{{ recommended_book.publication_year }}</p>
+            </form>
+        </div>
+    </div>
+
+      </div>
 {% endblock %}

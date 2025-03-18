@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import insert, text, create_engine
 from data_models import db, Author, Book
 import helper
+import random
 
 QUERY_ALL_AUTHORS = "SELECT authors.id, authors.name FROM authors"
 QUERY_ALL_BOOKS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id = authors.id"
@@ -13,7 +14,7 @@ QUERY_SORTED_TITLES = "SELECT books.*, authors.name FROM books JOIN authors ON b
 QUERY_SORTED_YEARS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id=authors.id ORDER BY books.publication_year DESC"
 QUERY_BY_SEARCH_TERM = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id = authors.id WHERE books.title LIKE CONCAT('%', :search_for, '%') OR authors.name LIKE CONCAT('%', :search_for, '%')"
 QUERY_ALL_AUTHORS_INFO = "SELECT authors.*, COUNT(books.author_id) AS book_count FROM authors LEFT JOIN books ON authors.id = books.author_id GROUP BY authors.name"
-
+QUERY_NEWEST_BOOKS = "SELECT books.*, authors.name FROM books JOIN authors ON books.author_id = authors.id ORDER BY books.id DESC LIMIT 3"
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/malgorzata/PycharmProjects/BookAlchemy/data/library.sqlite'
 db.init_app(app)
@@ -55,7 +56,10 @@ def add_book():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    recent_books = helper.get_all_results(QUERY_NEWEST_BOOKS)
+    books = helper.get_all_results(QUERY_ALL_BOOKS)
+    recommended_book = random.choice(books)
+    return render_template('index.html', recommended_book=recommended_book, books=recent_books)
 
 @app.route('/books', methods=['GET', 'POST'], endpoint='books')
 def all_books():
