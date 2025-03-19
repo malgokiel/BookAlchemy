@@ -16,10 +16,17 @@ def add_author():
     if request.method == 'POST':
         action = request.form.get('add')
         if action == 'Add Author':
-            message = helper.add_new_author(request.form.get('name'),
-                                            request.form.get('birthdate'),
-                                            request.form.get('date_of_death'))
-        return render_template('add_author.html', message=message)
+
+            name = request.form.get('name')
+            birthdate = request.form.get('birthdate')
+            death = request.form.get('date_of_death')
+
+            if helper.validate_author_params(name, birthdate, death) is True:
+                message = helper.add_new_author(name, birthdate, death)
+            else:
+                _, message = helper.validate_author_params(name, birthdate, death)
+
+        return render_template('add_author.html', messages=message)
 
     return render_template('add_author.html')
 
@@ -30,11 +37,18 @@ def add_book():
     if request.method == 'POST':
         action = request.form.get('add')
         if action == 'Add Book':
-            message = helper.add_new_book(request.form.get('ISBN'),
-                                          request.form.get('title'),
-                                          request.form.get('publication_year'),
-                                          request.form.get('author') )
-            return render_template('add_book.html', message=message, authors=authors)
+
+            isbn = request.form.get('ISBN')
+            title = request.form.get('title')
+            year = request.form.get('publication_year')
+            author_id = request.form.get('author')
+
+            if helper.validate_book_params(isbn, title, year, author_id) is True:
+                message = helper.add_new_book(isbn, title, year, author_id)
+            else:
+                _, message = helper.validate_book_params(isbn, title, year, author_id)
+
+            return render_template('add_book.html', messages=message, authors=authors)
     return render_template('add_book.html', authors=authors)
 
 
@@ -42,7 +56,10 @@ def add_book():
 def index():
     recent_books = helper.get_all_results(q.QUERY_NEWEST_BOOKS)
     books = helper.get_all_results(q.QUERY_ALL_BOOKS)
-    recommended_book = random.choice(books)
+    if books:
+        recommended_book = random.choice(books)
+    else:
+        recommended_book = []
     return render_template('index.html', recommended_book=recommended_book, books=recent_books)
 
 
@@ -63,7 +80,10 @@ def all_books():
         if action:
             books = helper.get_all_results(actions[action])
         elif delete:
-            books, message = helper.delete_record(Book, delete, q.QUERY_ALL_BOOKS)
+            book_title_form = request.form.get('book_title')
+            for book in books:
+                if str(book[0]) == delete and book[2] == book_title_form:
+                    books, message = helper.delete_record(Book, delete, q.QUERY_ALL_BOOKS)
         elif search:
             books = helper.get_all_results(q.QUERY_BY_SEARCH_TERM,{'search_for':search})
 
@@ -77,9 +97,11 @@ def all_authors():
     authors = helper.get_all_results(q.QUERY_ALL_AUTHORS_INFO)
     if request.method == 'POST':
         author_id = request.form.get('delete')
-        updated_authors, message = helper.delete_record(Author, author_id, q.QUERY_ALL_AUTHORS_INFO)
-
-        return render_template('authors.html', authors=updated_authors, message=message)
+        author_name_form = request.form.get('author_name')
+        for author in authors:
+            if author[0] == author_id and author[1] == author_name_form:
+                updated_authors, message = helper.delete_record(Author, author_id, q.QUERY_ALL_AUTHORS_INFO)
+                return render_template('authors.html', authors=updated_authors, message=message)
 
     return render_template('authors.html', authors=authors)
 

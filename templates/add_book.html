@@ -16,8 +16,10 @@
   <input type="number" min=1966 id="publication_year" name="publication_year" required><br><br>
   <input type="submit" value="Add Book" name="add">
   </form>
-  {% if message %}
+  {% if messages %}
+    {% for message in messages %}
     <p>{{ message }}</p>
+{% endfor %}
   {% endif %}
 
   <script>

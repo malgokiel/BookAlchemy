@@ -12,6 +12,7 @@
             <form action="books"  method="post" class="form-button-format">
                 <p class="form-button-format">{{ book.name }}</p>
                 <p class="form-button-format">{{ book.publication_year }}</p>
+                <input type="hidden" name="book_title" value="{{ book.title }}">
                 <button name="delete" value="{{ book.id }}" type="submit" class="form-button-format">delete book</button>
             </form>
 
@@ -20,4 +21,7 @@
     </div>
   {% endfor %}
       </div>
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
 {% endblock %}

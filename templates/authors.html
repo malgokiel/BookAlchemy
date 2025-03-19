@@ -12,6 +12,7 @@
                     <p class="form-button-format">Died: {{ author.date_of_death }}</p>
                 {% endif %}
                 {% if author.book_count == 0 %}
+                <input type="hidden" name="author_name" value="{{ author.name }}">
                 <button name="delete" value="{{ author.id }}" type="submit" class="form-button-format">delete author</button>
                 {% endif %}
             </form>
@@ -19,4 +20,7 @@
     </div>
   {% endfor %}
       </div>
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
 {% endblock %}

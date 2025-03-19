@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
 
 db = SQLAlchemy()
 
@@ -13,6 +12,7 @@ class Author(db.Model):
 
     def __repr__(self):
         return f'Author: {self.name}, born {self.birth_date}, died {self.date_of_death}'
+
 
 class Book(db.Model):
     __tablename__ = 'books'
