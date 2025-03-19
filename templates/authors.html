@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<div class="books-container">
+
+<div class="message-display">
+{% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+{% endfor %}
+  {% endif %}
+    </div>
+
+{% if authors %}
+<div class="book-container-wrapper">
   {% for author in authors %}
   <div class="container">
         <div class="slide" id="book-card">
@@ -18,9 +28,8 @@
             </form>
         </div>
     </div>
-  {% endfor %}
-      </div>
-  {% if message %}
-    <p>{{ message }}</p>
-  {% endif %}
+    {% endfor %}
+        {% else %}
+    <p class="message-display"> oops, nothing to see here</p>
+    {% endif %}
 {% endblock %}

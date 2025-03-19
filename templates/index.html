@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<h2>Recently Added</h2>
-<div class="books-container">
+<h2>⎯⎯ recently added ⎯⎯</h2>
+{% if books %}
+<div class="book-container-wrapper">
   {% for book in books %}
   <div class="container">
         <div class="slide" id="cover-card">
@@ -18,8 +19,12 @@
     </div>
   {% endfor %}
       </div>
-<h2>Next read maybe?</h2>
-<div class="books-container">
+    {% else %}
+    <p class="message-display"> oops, nothing to see here</p>
+    {% endif %}
+<h2>⎯⎯ next read maybe? ⎯⎯</h2>
+{% if recommended_book %}
+<div class="book-container-wrapper">
   <div class="container">
         <div class="slide" id="cover-card">
             <img src="https://covers.openlibrary.org/b/ISBN/{{ recommended_book.isbn }}-M.jpg" alt="cover of {{ recommended_book.title }}" class="book-cover">
@@ -34,4 +39,7 @@
     </div>
 
       </div>
+    {% else %}
+    <p> oops, nothing to see here</p>
+    {% endif %}
 {% endblock %}

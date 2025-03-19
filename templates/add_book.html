@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 
 {% block main %}
-  <form action="/add_book" method="POST">
+
+<div class="message-display">
+{% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+{% endfor %}
+  {% endif %}
+    </div>
+
+<div class="add-book-author">
+  <form action="/add_book" method="POST" class="form-button-format">
   <label for="title">Book title:</label>
-  <input type="text" id="title" name="title" required><br><br>
+  <input class="input-book-author" type="text" id="title" name="title" required><br><br>
   <label for="author">Author:</label>
   <select id="author" name="author" required>
       {% for author in authors %}
@@ -11,16 +21,13 @@
       {% endfor %}
   </select><br><br>
   <label for="ISBN">ISBN:</label>
-  <input type="number" id="ISBN" name="ISBN" required maxlength="13"><br><br>
+  <input class="input-book-author" type="number" id="ISBN" name="ISBN" required maxlength="13"><br><br>
   <label for="publication_year">Publication year:</label>
-  <input type="number" min=1966 id="publication_year" name="publication_year" required><br><br>
-  <input type="submit" value="Add Book" name="add">
+  <input class="input-book-author" type="number" min=1966 id="publication_year" name="publication_year" required><br><br>
+  <input class="form-button-format" type="submit" value="Add Book" name="add">
   </form>
-  {% if messages %}
-    {% for message in messages %}
-    <p>{{ message }}</p>
-{% endfor %}
-  {% endif %}
+    </div>
+
 
   <script>
       function setYear() {
