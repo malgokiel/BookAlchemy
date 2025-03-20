@@ -3,45 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
-<link href="/static/styles.css" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-  <body>
-  <nav class="topnav">
-      <a href="/">Home</a>
-      <a href="/books">Books</a>
-      <a href="/authors">Authors</a>
-  <a href="/add_book">Add Book</a>
-      <a href="/add_author">Add Author</a>
-  <div class="dropdown">
-    <button class="dropbtn">Sort
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-        <form action="books" method="post">
-            <button name="sort" value="author" class="sort-opt">by author</button>
-            <button name="sort" value="title" class="sort-opt">by title</button>
-          <button name="sort" value="year" class="sort-opt">by year</button>
+    <link href="/static/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav class="topnav">
+        <a href="/">Home</a>
+        <a href="/books">Books</a>
+        <a href="/authors">Authors</a>
+        <a href="/add_book">Add Book</a>
+        <a href="/add_author">Add Author</a>
+        {% if request.endpoint == 'books' %}
+        <div class="dropdown">
+            <button class="dropbtn">Sort<i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <form action="books" method="post">
+                    <button name="sort" value="author" class="sort-opt">by author</button>
+                    <button name="sort" value="title" class="sort-opt">by title</button>
+                    <button name="sort" value="year" class="sort-opt">by year</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% if request.endpoint == 'books' %}
+        <div class="search-container">
+            <form action="books" method="post">
+                <input type="text" name="search" placeholder="Search..">
+                <button name="search" type="submit"><i class="fa fa-search"></i></button>
             </form>
-    </div>
+        </div>
+        {% endif %}
 
-  </div>
-      {% if request.endpoint == 'books' %}
-<div class="search-container">
-          <form action="books" method="post">
-      <input type="text" name="search" placeholder="Search..">
-      <button name="search" type="submit"><i class="fa fa-search"></i></button>
-              </form>
-      </div>
-      {% endif %}
- </nav>
-<main>
-    {% block main %}{% endblock %}
-    {% block scripts %}{% endblock %}
-</main>
+    </nav>
+    <main>
+        {% block main %}{% endblock %}
+        {% block scripts %}{% endblock %}
+    </main>
 </body>
-<!--
-<footer>
-    <p>created with ♥︎ by  <a href="https://github.com/malgokiel">Malgorzata</a></p>
-</footer> -->
 </html>

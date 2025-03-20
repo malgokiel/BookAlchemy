@@ -1,25 +1,30 @@
+
+
+
+<!--  NOT IN PRODUCTION - WIP -->
+
 {% extends "layout.html" %}
 
 {% block main %}
 <div class="books-container">
-  <div class="container">
-        <div class="slide" id="cover-card">
-            <img src="https://covers.openlibrary.org/b/ISBN/{{ book.isbn }}-M.jpg" alt="cover of {{ book.title }}" onerror="this.classList.add('error');" class="book-cover">
-        </div>
-        <div class="slide" id="book-card">
-            <h1>Example Titile</h1>
-            <form action="books"  method="post" class="form-button-format">
-                <p class="form-button-format">Bob Bobbinson</p>
-                <p class="form-button-format">published 2015</p>
-                <a href="https://www.goodreads.com/book/isbn/9780345391803">Goodreads</a>
-                <p>I really liked this book, it touched my heart and soul. The way Bobbinson described the city of Tttit was exceptional.</p>
-                <p>&#127775;&#127775;&#127775;&#127775;&#127775;</p>
-                <input type="hidden" name="book_title" value="{{ book.title }}">
-                <button name="delete" value="{{ book.id }}" type="submit" class="form-button-format">delete book</button>
-            </form>
+<div class="container">
+<div class="slide" id="cover-card">
+<img src="https://covers.openlibrary.org/b/ISBN/{{ book.isbn }}-M.jpg" alt="cover of {{ book.title }}" onerror="this.classList.add('error');" class="book-cover">
+</div>
+<div class="slide" id="book-card">
+<h1>Example Titile</h1>
+<form action="books"  method="post" class="form-button-format">
+<p class="form-button-format">Bob Bobbinson</p>
+<p class="form-button-format">published 2015</p>
+<a href="https://www.goodreads.com/book/isbn/9780345391803">Goodreads</a>
+<p>I really liked this book, it touched my heart and soul. The way Bobbinson described the city of Tttit was exceptional.</p>
+<p>&#127775;&#127775;&#127775;&#127775;&#127775;</p>
+<input type="hidden" name="book_title" value="{{ book.title }}">
+<button name="delete" value="{{ book.id }}" type="submit" class="form-button-format">delete book</button>
+</form>
 
-        </div>
-    </div>
+</div>
+</div>
 
-      </div>
+</div>
 {% endblock %}

@@ -6,21 +6,20 @@
 {% if messages %}
     {% for message in messages %}
     <p>{{ message }}</p>
-{% endfor %}
-  {% endif %}
-    </div>
+    {% endfor %}
+{% endif %}
+</div>
 
 <div class="add-book-author">
-  <form action="/add_author" method="POST" class="form-button-format">
-  <label for="name">Author Name:</label> 
-  <input class="input-book-author" type="text" id="name" name="name" required><br><br>
-  
-  <label for="birthdate">Birthdate:</label> 
-  <input class="input-book-author" type="date" id="birthdate" name="birthdate" required><br><br>
-  <label for="date_of_death">Date of Death:</label> 
-  <input class="input-book-author" type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input class="form-button-format" type="submit" value="Add Author" name="add">
-  </form>
-    </div>
+    <form action="/add_author" method="POST" class="form-button-format">
+        <label for="name">Author Name:</label>
+        <input class="input-book-author" type="text" id="name" name="name" required><br><br>
+        <label for="birthdate">Birthdate:</label>
+        <input class="input-book-author" type="date" id="birthdate" name="birthdate" required><br><br>
+        <label for="date_of_death">Date of Death:</label>
+        <input class="input-book-author" type="date" id="date_of_death" name="date_of_death"><br><br>
+        <input class="form-button-format" type="submit" value="Add Author" name="add">
+    </form>
+</div>
 
 {% endblock %}}

@@ -6,14 +6,14 @@
 {% if messages %}
     {% for message in messages %}
     <p>{{ message }}</p>
-{% endfor %}
-  {% endif %}
-    </div>
+    {% endfor %}
+{% endif %}
+</div>
 
 {% if books %}
 <div class="book-container-wrapper">
-  {% for book in books %}
-  <div class="container">
+    {% for book in books %}
+    <div class="container">
         <div class="slide" id="cover-card">
             <img src="https://covers.openlibrary.org/b/ISBN/{{ book.isbn }}-M.jpg" alt="cover of {{ book.title }}" onerror="this.classList.add('error');" class="book-cover">
         </div>
@@ -25,12 +25,12 @@
                 <input type="hidden" name="book_title" value="{{ book.title }}">
                 <button name="delete" value="{{ book.id }}" type="submit" class="form-button-format">delete book</button>
             </form>
-
-
         </div>
     </div>
     {% endfor %}
-    {% else %}
+</div>
+{% else %}
     <p class="message-display"> oops, nothing to see here</p>
-    {% endif %}
+{% endif %}
+
 {% endblock %}

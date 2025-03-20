@@ -6,20 +6,20 @@
 {% if messages %}
     {% for message in messages %}
     <p>{{ message }}</p>
-{% endfor %}
-  {% endif %}
-    </div>
+    {% endfor %}
+{% endif %}
+</div>
 
 {% if authors %}
 <div class="book-container-wrapper">
-  {% for author in authors %}
-  <div class="container">
+    {% for author in authors %}
+    <div class="container">
         <div class="slide" id="book-card">
             <h1>{{ author.name }}</h1>
             <form action="authors"  method="post" class="form-button-format">
                 <p class="form-button-format">Born: {{ author.birth_date }}</p>
                 {% if author.date_of_death %}
-                    <p class="form-button-format">Died: {{ author.date_of_death }}</p>
+                <p class="form-button-format">Died: {{ author.date_of_death }}</p>
                 {% endif %}
                 {% if author.book_count == 0 %}
                 <input type="hidden" name="author_name" value="{{ author.name }}">
@@ -29,7 +29,8 @@
         </div>
     </div>
     {% endfor %}
-        {% else %}
+{% else %}
     <p class="message-display"> oops, nothing to see here</p>
-    {% endif %}
+{% endif %}
+
 {% endblock %}
