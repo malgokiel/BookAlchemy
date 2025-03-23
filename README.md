@@ -11,7 +11,7 @@ To set the app up, simply clone this repository and install all the dependencies
 
 ## Usage:
 Once all the dependencies are installed, simply run 
-> flask run app.py 
+> flask run
 
 in the terminal and enjoy your personal library.
 
